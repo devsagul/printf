@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/22 17:34:34 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/22 17:38:40 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 typedef struct	s_smartstr
 {
 	char		*str;
-	size_t		len;
+	ssize_t		len;
 	size_t		size;
 }				t_smartstr
 

@@ -6,25 +6,32 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:17:31 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/22 17:32:36 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/22 17:40:25 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
 #include <unistd.h>
+#include <stdarg.h>
 #include "libftprintf.h"
 
 int		ft_printf(const char *format, ...)
 {
 	t_smartstr	buffer;
 	ssize_t		bytes;
+	va_list		ap;
 
-	// initialize arguments
+	va_start(ap, format);
 	// checks format for null etc
-	// initialize buffer
-	// while format is not empty
+	buffer.str = NULL;
+	buffer.size = 0;
+	buffer.len = 0;
+	while (*format != '\0')
+	{
 		// fill buffer
-		// checck buffer not empty
+		// check buffer not empty
+	}
 	bytes = write(1, buffer.str, buffer.len);
+	va_end(ap);
 	return (bytes);
 }
