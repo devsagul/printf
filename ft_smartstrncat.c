@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*   ft_smartstrncat.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/22 18:37:06 by mbalon-s         ###   ########.fr       */
+/*   Created: 2019/02/22 18:46:13 by mbalon-s          #+#    #+#             */
+/*   Updated: 2019/02/22 18:50:55 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
-# include <string.h>
-
-typedef struct	s_smartstr
+size_t	ft_smartstrncat(t_smartstr *smartstr, const char *s, size_t len)
 {
-	char		*str;
-	ssize_t		len;
-	size_t		size;
-}				t_smartstr
+	size_t	i;
 
-size_t	progress_buffer(const char *format, t_smartstr buffer, va_list ap);
-int		ft_printf(const char *format, ...);
-
-#endif
+	if (smartstr->len + len < smartstr->len)
+	{
+		// flush smarstr
+		return (0);
+	}
+	while (smartstr->len + len >= size)
+	{
+		// expand smartstr
+	}
+	i = len;
+	while (*s != '\0')
+	{
+		smartstr->str[i] = *s;
+		i++;
+		s++;
+	}
+	smartstr->str[i] = '\0';
+	smartstr->len += len;
+	return (NULL);
+}
