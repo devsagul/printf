@@ -1,40 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_smartstrncat.c                                  :+:      :+:    :+:   */
+/*   ft_expandsmartstr.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/22 18:46:13 by mbalon-s          #+#    #+#             */
+/*   Created: 2019/02/22 19:40:22 by mbalon-s          #+#    #+#             */
 /*   Updated: 2019/02/22 20:45:03 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libftprintf.h"
 
-size_t	ft_smartstrncat(t_smartstr *smartstr, const char *s, size_t len)
+ssize_t	ft_expandsmartstr(t_smartstr *smartstr)
 {
-	size_t	i;
-	ssize_t	tmp;
+	char	*new_str;
+	size_t	new_size;
 
-	if (smartstr->len + len < smartstr->len)
+	if (smartstr->size == (size_t)-1)
+		return (-1);
+	if (smartstr->size == 0)
+		new_size = INITIAL_BUFFER_SIZE;
+	else
+		new_size = smartstr->size << 1;
+	if (new_size <= smartstr->size)
+		return (-1);
+	new_str = (char *)malloc(sizeof(char) * new_size);
+	if (new_str == NULL)
+		return (-1);
+	if (smartstr->str != NULL)
 	{
-		ft_flushsmartstr(smartstr);
-		return (0);
+		ft_strcpy(new_str, smartstr->str);
+		free(smartstr->str);
 	}
-	while (smartstr->len + len >= smartstr->size)
-	{
-		tmp = ft_expandsmartstr(smartstr);
-		if (tmp == -1)
-		{
-			ft_flushsmartstr(smartstr);
-			return (0);
-		}
-	}
-	i = smartstr->len;
-	while (*s != '\0')
-		smartstr->str[i++] = *s++;
-	smartstr->str[i] = '\0';
-	smartstr->len += len;
-	return (len);
+	smartstr->str = new_str;
+	smartstr->size = new_size;
+	return (new_size);
 }

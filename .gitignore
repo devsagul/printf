@@ -1,2 +1,8 @@
 # vim swp files
 .*.swp
+
+# object files
+*.o
+
+# archive files
+*.a
