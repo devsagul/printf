@@ -11,7 +11,9 @@ SOURCES = ft_printf.c			\
 		  ft_strchr.c			\
 		  ft_strcpy.c			\
 		  ft_instr.c			\
-		  ft_ulfromstr
+		  ft_ulfromstr.c		\
+		  ft_memset.c			\
+		  ft_percent_format.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

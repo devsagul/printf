@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 16:00:11 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 17:16:59 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 typedef	enum		e_specificator
 {
+	PERCENT,
 	CHAR,
 }					t_specificator;
 
@@ -32,8 +33,8 @@ typedef struct		s_smartstr
 
 typedef struct		s_specification
 {
-	unsigned long	minwidth;
-	unsigned long	precision;
+	int				minwidth;
+	int				precision;
 	t_specificator	specificator;
 	unsigned		align_left : 1;
 	unsigned		force_sign : 1;
@@ -49,12 +50,12 @@ typedef struct		s_specification
 	unsigned		long_double_mod : 1;
 }					t_specification;
 
-typedef size_t		(*t_outputfunc) (char **, t_specification, va_list);
+typedef size_t		(*t_outputfunc) (char **pstr, t_specification, va_list);
 
 int					ft_printf(const char *format, ...);
 size_t				ft_getstrbyspec(t_specification spec,
 									t_smartstr *pbuf,
-									va_list ap);
+									va_list		ap);
 size_t				ft_smartstrncat(t_smartstr *smartstr,
 									const char *s, size_t len);
 void				ft_flushsmartstr(t_smartstr *smartstr);
@@ -63,5 +64,7 @@ char				*ft_strchr(const char *s, int c);
 char				*ft_strcpy(char *dst, const char *src);
 int					ft_instr(char c, char *s);
 size_t				ft_ulfromstr(const char *s, unsigned long *dst);
+void				*ft_memset(void *b, int c, size_t len);
+size_t				ft_percent_format(char **pstr, t_specification spec);
 
 #endif

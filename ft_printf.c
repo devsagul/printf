@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:17:31 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 15:57:20 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 17:11:24 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,10 @@ static size_t	progress_buffer(const char *format,
 	}
 	format++;
 	format += get_specification(format, &spec);
+	if (spec.wildcard_minwidth)
+		spec.minwidth = va_arg(ap, int);
+	if (spec.wildcard_precision)
+		spec.precision = va_arg(ap, int);
 	return (ft_getstrbyspec(spec, pbuf, ap) + 1);
 }
 
