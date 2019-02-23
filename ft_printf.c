@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:17:31 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 19:19:29 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 20:06:10 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,13 @@ static size_t	get_specification(const char *format,
 		{
 			s += ft_ulfromstr(s, &tmp);
 			pspec->precision = tmp;
+			pspec->precision_set = 1;
 		}
 		else if (*s == '*')
 		{
 			pspec->wildcard_precision = 1;
 			s++;
+			pspec->precision_set = 1;
 		}
 	}
 	s += get_mods(s, pspec);

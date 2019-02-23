@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getspecificator.c                               :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/23 17:33:46 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 19:44:36 by mbalon-s         ###   ########.fr       */
+/*   Created: 2018/12/03 18:33:35 by mbalon-s          #+#    #+#             */
+/*   Updated: 2019/02/23 19:43:07 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdlib.h>
 
-size_t				ft_getspecificator(const char *format,
-										t_specification *pspec)
+char	*ft_strncpy(char *dst, const char *src, size_t len)
 {
-	size_t	res;
+	size_t	i;
 
-	res = 1;
-	if (*format == '%')
-		pspec->specificator = PERCENT;
-	else if (*format == 'c')
-		pspec->specificator = CHAR;
-	else if (*format == 's')
-		pspec->specificator = STRING;
-	else
+	i = 0;
+	while (src[i] != '\0' && i < len)
 	{
-		pspec->specificator = UNKNOWN;
-		return (0);
+		dst[i] = src[i];
+		i++;
 	}
-	return (res);
+	while (i < len)
+	{
+		dst[i] = '\0';
+		i++;
+	}
+	return (dst);
 }

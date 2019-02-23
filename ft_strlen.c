@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getspecificator.c                               :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/23 17:33:46 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 19:44:36 by mbalon-s         ###   ########.fr       */
+/*   Created: 2018/12/03 18:08:48 by mbalon-s          #+#    #+#             */
+/*   Updated: 2019/02/23 19:42:47 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdlib.h>
 
-size_t				ft_getspecificator(const char *format,
-										t_specification *pspec)
+size_t	ft_strlen(const char *s)
 {
-	size_t	res;
+	char *tmp;
 
-	res = 1;
-	if (*format == '%')
-		pspec->specificator = PERCENT;
-	else if (*format == 'c')
-		pspec->specificator = CHAR;
-	else if (*format == 's')
-		pspec->specificator = STRING;
-	else
-	{
-		pspec->specificator = UNKNOWN;
-		return (0);
-	}
-	return (res);
+	tmp = (char *)s;
+	while (*tmp != '\0')
+		tmp++;
+	return (tmp - s);
 }
