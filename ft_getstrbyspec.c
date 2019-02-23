@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:48:05 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 19:31:19 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 22:41:12 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static t_outputfunc	get_output_function(t_specificator specificator)
 		return (ft_char_format);
 	if (specificator == STRING)
 		return (ft_string_format);
+	if (specificator == INTEGER)
+		return (ft_integer_format);
 	return (NULL);
 }
 

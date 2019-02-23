@@ -19,7 +19,8 @@ SOURCES = ft_printf.c			\
 		  ft_getspecificator.c	\
 		  ft_percent_format.c	\
 		  ft_char_format.c		\
-		  ft_string_format.c
+		  ft_string_format.c	\
+		  ft_integer_format.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 20:06:11 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 23:31:19 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef	enum		e_specificator
 	PERCENT,
 	CHAR,
 	STRING,
+	INTEGER,
 }					t_specificator;
 
 typedef struct		s_smartstr
@@ -35,8 +36,8 @@ typedef struct		s_smartstr
 
 typedef struct		s_specification
 {
-	size_t			minwidth;
-	size_t			precision;
+	int				minwidth;
+	int				precision;
 	t_specificator	specificator;
 	unsigned		align_left : 1;
 	unsigned		force_sign : 1;
@@ -78,4 +79,7 @@ size_t				ft_char_format(char **pdst, t_specification spec,
 									va_list ap);
 size_t				ft_string_format(char **pdst, t_specification spec,
 										va_list ap);
+size_t				ft_integer_format(char **pdst, t_specification spec,
+										va_list ap);
+
 #endif

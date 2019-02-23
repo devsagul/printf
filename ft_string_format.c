@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 19:32:43 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 20:06:10 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 23:32:02 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 size_t				ft_string_format(char **pdst, t_specification spec,
 										va_list ap)
 {
-	size_t	len;
+	int		len;
 	char	*str;
 	char	*arg;
 
