@@ -4,11 +4,14 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I . -c
 
 SOURCES = ft_printf.c			\
+		  ft_getstrbyspec.c		\
 		  ft_smartstrncat.c		\
 		  ft_expandsmartstr.c	\
 		  ft_flushsmartstr.c	\
 		  ft_strchr.c			\
-		  ft_strcpy.c
+		  ft_strcpy.c			\
+		  ft_instr.c			\
+		  ft_ulfromstr
 
 OBJECTS = $(SOURCES:.c=.o)
 
