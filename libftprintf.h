@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 17:16:59 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 18:25:35 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 typedef	enum		e_specificator
 {
+	UNKNOWN,
 	PERCENT,
 	CHAR,
 }					t_specificator;
@@ -53,10 +54,10 @@ typedef struct		s_specification
 typedef size_t		(*t_outputfunc) (char **pstr, t_specification, va_list);
 
 int					ft_printf(const char *format, ...);
-size_t				ft_getstrbyspec(t_specification spec,
+void				ft_getstrbyspec(t_specification spec,
 									t_smartstr *pbuf,
 									va_list		ap);
-size_t				ft_smartstrncat(t_smartstr *smartstr,
+t_smartstr			*ft_smartstrncat(t_smartstr *smartstr,
 									const char *s, size_t len);
 void				ft_flushsmartstr(t_smartstr *smartstr);
 ssize_t				ft_expandsmartstr(t_smartstr *smartstr);
@@ -65,6 +66,8 @@ char				*ft_strcpy(char *dst, const char *src);
 int					ft_instr(char c, char *s);
 size_t				ft_ulfromstr(const char *s, unsigned long *dst);
 void				*ft_memset(void *b, int c, size_t len);
+void				ft_bzero(void *s, size_t n);
+size_t				ft_getspecificator(const char *format,
+										t_specification *pspec);
 size_t				ft_percent_format(char **pstr, t_specification spec);
-
 #endif

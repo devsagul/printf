@@ -6,23 +6,23 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 18:46:13 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 16:28:04 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 18:17:08 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-size_t	ft_smartstrncat(t_smartstr *smartstr, const char *s, size_t len)
+t_smartstr	*ft_smartstrncat(t_smartstr *smartstr, const char *s, size_t len)
 {
 	size_t	i;
 	ssize_t	tmp;
 
 	if (s == NULL)
-		return (len);
+		return (smartstr);
 	if (smartstr->len + len < smartstr->len)
 	{
 		ft_flushsmartstr(smartstr);
-		return (0);
+		return (smartstr);
 	}
 	while (smartstr->len + len >= smartstr->size)
 	{
@@ -30,7 +30,7 @@ size_t	ft_smartstrncat(t_smartstr *smartstr, const char *s, size_t len)
 		if (tmp == -1)
 		{
 			ft_flushsmartstr(smartstr);
-			return (0);
+			return (smartstr);
 		}
 	}
 	i = smartstr->len;
@@ -38,5 +38,5 @@ size_t	ft_smartstrncat(t_smartstr *smartstr, const char *s, size_t len)
 		smartstr->str[i++] = *s++;
 	smartstr->str[i] = '\0';
 	smartstr->len += len;
-	return (len);
+	return (smartstr);
 }

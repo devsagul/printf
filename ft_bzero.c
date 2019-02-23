@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_flushsmartstr.c                                 :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/22 19:36:00 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 17:49:49 by mbalon-s         ###   ########.fr       */
+/*   Created: 2018/12/01 18:29:43 by mbalon-s          #+#    #+#             */
+/*   Updated: 2019/02/23 18:17:06 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libftprintf.h"
 
-void	ft_flushsmartstr(t_smartstr *smartstr)
+void	ft_bzero(void *s, size_t n)
 {
-	if (smartstr->str != NULL)
-		free(smartstr->str);
-	smartstr->size = 0;
-	smartstr->len = 0;
+	size_t	i;
+	char	*mas;
+
+	mas = (char *)s;
+	i = 0;
+	while (i < n)
+	{
+		mas[i] = 0;
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:17:31 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 17:11:24 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 18:33:58 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,19 +78,27 @@ static size_t	get_specification(const char *format,
 		s += ft_ulfromstr(s, &tmp);
 		pspec->minwidth = tmp;
 	}
-	else if (*s++ == '*')
+	else if (*s == '*')
+	{
 		pspec->wildcard_minwidth = 1;
+		s++;
+	}
 	if (*s == '.')
 	{
-		if (*s >= '1' && *s <= '9')
+		s++;
+		if (*s >= '0' && *s <= '9')
 		{
 			s += ft_ulfromstr(s, &tmp);
 			pspec->precision = tmp;
 		}
-		else if (*s++ == '*')
+		else if (*s == '*')
+		{
 			pspec->wildcard_precision = 1;
+			s++;
+		}
 	}
 	s += get_mods(s, pspec);
+	s += ft_getspecificator(s, pspec);
 	return (s - format);
 }
 
@@ -99,21 +107,26 @@ static size_t	progress_buffer(const char *format,
 {
 	char			*s;
 	t_specification	spec;
+	size_t			res;
 
 	if (*format != '%')
 	{
 		s = ft_strchr(format, '%');
 		if (s == NULL)
 			s = ft_strchr(format, '\0');
-		return (ft_smartstrncat(pbuf, format, s - format));
+		ft_smartstrncat(pbuf, format, s - format);
+		return (s - format);
 	}
 	format++;
-	format += get_specification(format, &spec);
+	res = 1;
+	ft_bzero(&spec, sizeof(spec));
+	res += get_specification(format, &spec);
 	if (spec.wildcard_minwidth)
 		spec.minwidth = va_arg(ap, int);
 	if (spec.wildcard_precision)
 		spec.precision = va_arg(ap, int);
-	return (ft_getstrbyspec(spec, pbuf, ap) + 1);
+	ft_getstrbyspec(spec, pbuf, ap);
+	return (res);
 }
 
 int				ft_printf(const char *format, ...)
@@ -125,17 +138,15 @@ int				ft_printf(const char *format, ...)
 	if (format == NULL)
 		return (-1);
 	va_start(ap, format);
-	buffer.str = NULL;
-	buffer.size = 0;
-	buffer.len = 0;
+	ft_bzero(&buffer, sizeof(buffer));
 	while (*format != '\0')
 	{
 		format += progress_buffer(format, &buffer, ap);
 		if (buffer.str == NULL)
 			return (-1);
 	}
-	bytes = write(1, buffer.str, buffer.len);
 	va_end(ap);
+	bytes = write(1, buffer.str, buffer.len);
 	ft_flushsmartstr(&buffer);
 	return (bytes);
 }
