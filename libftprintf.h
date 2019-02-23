@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 18:25:35 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 19:19:28 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,7 @@ void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
 size_t				ft_getspecificator(const char *format,
 										t_specification *pspec);
-size_t				ft_percent_format(char **pstr, t_specification spec);
+size_t				ft_percent_format(char **pdst, t_specification spec);
+size_t				ft_char_format(char **pdst, t_specification spec,
+									va_list ap);
 #endif

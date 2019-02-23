@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:17:31 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 18:33:58 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 19:19:29 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,11 +140,7 @@ int				ft_printf(const char *format, ...)
 	va_start(ap, format);
 	ft_bzero(&buffer, sizeof(buffer));
 	while (*format != '\0')
-	{
 		format += progress_buffer(format, &buffer, ap);
-		if (buffer.str == NULL)
-			return (-1);
-	}
 	va_end(ap);
 	bytes = write(1, buffer.str, buffer.len);
 	ft_flushsmartstr(&buffer);

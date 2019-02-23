@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:48:05 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 18:34:01 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 19:19:30 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 static t_outputfunc	get_output_function(t_specificator specificator)
 {
 	if (specificator == CHAR)
-		return (NULL);
+		return (ft_char_format);
 	return (NULL);
 }
 
@@ -40,10 +40,7 @@ void				ft_getstrbyspec(t_specification spec,
 	}
 	output_function = get_output_function(spec.specificator);
 	if (output_function == NULL)
-	{
-		ft_flushsmartstr(pbuf);
 		return ;
-	}
 	len = output_function(&s, spec, ap);
 	ft_smartstrncat(pbuf, s, len);
 	if (s != NULL)

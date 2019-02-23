@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 16:20:21 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 18:33:59 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 19:17:25 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ size_t	ft_percent_format(char **pdst, t_specification spec)
 	str = (char *)malloc(sizeof(char) * (res + 1));
 	if (str == NULL)
 		return (0);
-	ft_memset(str, ' ', sizeof(char) * res);
+	if (spec.force_zeroes && !spec.align_left)
+		ft_memset(str, '0', sizeof(char) * res);
+	else
+		ft_memset(str, ' ', sizeof(char) * res);
 	str[res] = '\0';
 	if (spec.align_left)
 		str[0] = '%';
