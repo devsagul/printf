@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 15:02:53 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 15:49:06 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 16:01:02 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 size_t	ft_ulfromstr(const char *s, unsigned long *dst)
 {
 	unsigned long	nbr;
-	char			*tmp;
+	const char		*tmp;
 
 	tmp = s;
 	nbr = 0;
-	while (instr(*tmp, " \t\n\r\f"))
+	while (ft_instr(*tmp, " \t\n\r\f"))
 		tmp++;
 	while (*tmp >= '0' && *tmp <= '9')
 	{

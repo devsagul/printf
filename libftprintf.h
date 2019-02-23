@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 15:57:20 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 16:00:11 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFTPRINTF_H
 
 # include <string.h>
+# include <stdarg.h>
 
 # define INITIAL_BUFFER_SIZE 2048
 

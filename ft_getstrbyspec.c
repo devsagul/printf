@@ -6,16 +6,25 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:48:05 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 15:57:19 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/23 16:01:02 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
+#include <stdlib.h>
+#include <stdarg.h>
 #include "libftprintf.h"
 
-size_t		ft_getstrbyspec(t_specification spec,
-							t_smartstr *pbuf,
-							va_list ap)
+static t_outputfunc	get_output_function(t_specificator specificator)
+{
+	if (specificator == CHAR)
+		return (NULL);
+	return (NULL);
+}
+
+size_t				ft_getstrbyspec(t_specification spec,
+									t_smartstr *pbuf,
+									va_list ap)
 {
 	t_outputfunc	output_function;	
 	size_t			len;
