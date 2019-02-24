@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 22:41:32 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 23:49:37 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 16:58:37 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,43 @@ static int			count_digits(long long int nbr)
 	res = 0;
 	while (nbr)
 	{
-		nbr *= 0.1;
+		nbr /= 10;
 		res++;
 	}
 	return (res);
 }
 
 static void			format_integer(long long int nbr, t_specification spec,
-									char *str, int num_digits)
+									char *str)
 {
 	size_t			i;
 	size_t			digits;
 
-	if (spec.force_zeroes)
+	ft_memset(str, ' ', sizeof(char) * spec.minwidth);
+	if (spec.force_zeroes && spec.align_left)
+		ft_memset(str, '0', sizeof(char) * spec.precision);
+	else if (spec.force_zeroes && !spec.precision_set)
 		ft_memset(str, '0', sizeof(char) * spec.minwidth);
+	else if (spec.force_zeroes && spec.precision != 0)
+		ft_memset(str + spec.minwidth - spec.precision, '0', sizeof(char) * spec.precision);
+	if (spec.align_left || (spec.force_sign && spec.force_zeroes))
+		i = 0;
 	else
-		ft_memset(str, ' ', sizeof(char) * spec.minwidth);
-	if (spec.align_left || spec.force_zeroes)
-		i = ;
-	else
-		i = spec.minwidth - num_digits;
+		i = spec.minwidth - spec.precision;
 	if (spec.force_sign && nbr >= 0)
 		str[i++] = '+';
 	else if (spec.force_spacing && nbr >= 0)
 		str[i++] = ' ';
+	// process left long long value
 	else if (nbr < 0)
 	{
 		nbr *= -1;
 		str[i++] = '-';
 	}
-	digits = spec.precision;
-	if (nbr == 0)
-		str[digits - 1] = '0';
+	if (!spec.align_left)
+		digits = spec.minwidth;
+	else
+		digits = spec.precision;
 	while (digits != i)
 	{
 		digits--;
@@ -72,26 +77,29 @@ size_t				ft_integer_format(char **pdst, t_specification spec,
 		nbr = va_arg(ap, long long int);
 	if (spec.long_mod)
 		nbr = va_arg(ap, long int);
-	if (spec.short_mod)
-		nbr = (short int) va_arg(ap, int);
-	if (spec.short_short_mod)
-		nbr = (short int) va_arg(ap, int);
+	if (spec.short_mod || spec.short_short_mod)
+		nbr = (short int) va_arg(ap, int) & ((1 << sizeof(short int)) - 1);
 	else
 		nbr = va_arg(ap, int);
 	num_digits = count_digits(nbr);
-	if (nbr < 0 || spec.force_sign || spec.force_spacing)
+	if (nbr == 0 && ((spec.precision_set && spec.precision != 0) || !spec.precision_set))
 		num_digits++;
-	if (!spec.precision_set)
+	if (nbr < 0)
+		spec.force_sign = 1;
+	if (nbr < 0 || spec.force_sign || spec.force_spacing)
+	{
+		num_digits++;
+		spec.precision++;
+	}
+	if (!spec.precision_set || spec.precision < num_digits)
 		spec.precision = num_digits;
-	if (num_digits < spec.precision)
-		spec.precision = num_digits;
-	if (spec.minwidth < num_digits)
+	if (spec.minwidth < spec.precision)
 		spec.minwidth = spec.precision;
 	str = (char *)malloc(sizeof(char) * spec.minwidth + 1);
 	if (str == NULL)
 		return (0);
 	str[spec.minwidth] = '\0';
-	format_integer(nbr, spec, str, num_digits);
+	format_integer(nbr, spec, str);
 	*pdst = str;
 	return (spec.minwidth);
 }

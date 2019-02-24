@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:17:31 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 20:06:10 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 16:58:37 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 #include <stdarg.h>
 #include "libftprintf.h"
 
-static size_t	get_flags(const char *format, t_specification *pspec)
+static size_t	get_mods(const char *format, t_specification *pspec)
 {
 	const char	*s;
 
 	s = format;
-	while (ft_instr(*s, "-+ 0#"))
+	while (ft_instr(*s, "-+ 0#hlL"))
 	{
 		if (*s == '-')
 			pspec->align_left = 1;
@@ -32,19 +32,7 @@ static size_t	get_flags(const char *format, t_specification *pspec)
 			pspec->force_zeroes = 1;
 		else if (*s == '#')
 			pspec->alt_print = 1;
-		s++;
-	}
-	return (s - format);
-}
-
-static size_t	get_mods(const char *format, t_specification *pspec)
-{
-	const char	*s;
-
-	s = format;
-	while (ft_instr(*s, "hlL"))
-	{
-		if (*s == 'h')
+		else if (*s == 'h')
 		{
 			if (pspec->short_mod)
 				pspec->short_short_mod = 1;
@@ -72,7 +60,7 @@ static size_t	get_specification(const char *format,
 	unsigned long	tmp;
 
 	s = format;
-	s += get_flags(s, pspec);
+	s += get_mods(s, pspec);
 	if (*s >= '1' && *s <= '9')
 	{
 		s += ft_ulfromstr(s, &tmp);
@@ -86,17 +74,17 @@ static size_t	get_specification(const char *format,
 	if (*s == '.')
 	{
 		s++;
+		pspec->precision_set = 1;
+		pspec->precision = 0;
 		if (*s >= '0' && *s <= '9')
 		{
 			s += ft_ulfromstr(s, &tmp);
 			pspec->precision = tmp;
-			pspec->precision_set = 1;
 		}
 		else if (*s == '*')
 		{
 			pspec->wildcard_precision = 1;
 			s++;
-			pspec->precision_set = 1;
 		}
 	}
 	s += get_mods(s, pspec);
