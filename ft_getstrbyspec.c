@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:48:05 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 21:05:12 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 21:19:41 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static t_outputfunc	get_output_function(t_specificator specificator)
 		return (ft_hex_upper_format);
 	if (specificator == UNSIGNED)
 		return (ft_unsigned_format);
+	if (specificator == POINTER)
+		return (ft_pointer_format);
 	return (NULL);
 }
 

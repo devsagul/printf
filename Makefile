@@ -24,7 +24,8 @@ SOURCES = ft_printf.c			\
 		  ft_oct_format.c		\
 		  ft_hex_format.c		\
 		  ft_hex_upper_format.c	\
-		  ft_unsigned_format.c
+		  ft_unsigned_format.c	\
+		  ft_pointer_format.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

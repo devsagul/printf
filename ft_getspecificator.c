@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 17:33:46 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 21:15:52 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 21:19:11 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ size_t				ft_getspecificator(const char *format,
 		pspec->specificator = HEX_UPPER;
 	else if (*format == 'u' || *format == 'U')
 		pspec->specificator = UNSIGNED;
+	else if (*format == 'p')
+		pspec->specificator = POINTER;
 	else
 	{
 		pspec->specificator = UNKNOWN;
