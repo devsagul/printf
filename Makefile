@@ -21,7 +21,9 @@ SOURCES = ft_printf.c			\
 		  ft_char_format.c		\
 		  ft_string_format.c	\
 		  ft_integer_format.c	\
-		  ft_oct_format.c
+		  ft_oct_format.c		\
+		  ft_hex_format.c		\
+		  ft_hex_upper_format.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

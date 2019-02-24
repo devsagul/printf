@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:48:05 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 19:57:28 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 20:19:29 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ static t_outputfunc	get_output_function(t_specificator specificator)
 		return (ft_integer_format);
 	if (specificator == OCT)
 		return (ft_oct_format);
+	if (specificator == HEX)
+		return (ft_hex_format);
+	if (specificator == HEX_UPPER)
+		return (ft_hex_upper_format);
 	return (NULL);
 }
 

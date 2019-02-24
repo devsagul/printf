@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_oct_format.c                                    :+:      :+:    :+:   */
+/*   ft_hex_format.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/24 19:42:55 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 20:03:44 by mbalon-s         ###   ########.fr       */
+/*   Created: 2019/02/24 19:59:02 by mbalon-s          #+#    #+#             */
+/*   Updated: 2019/02/24 20:05:58 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int			count_digits(long long int nbr)
 	res = 0;
 	while (nbr != 0)
 	{
-		nbr >>= 3;
+		nbr >>= 4;
 		res++;
 	}
 	return (res);
@@ -57,8 +57,10 @@ static void			format_integer(long long int nbr, t_specification spec,
 		if (-nbr == nbr)
 		{
 			digits--;
-			str[digits] = '0' - (nbr & 0x7);
-			nbr >>= 3;
+			str[digits] = '0' - (nbr & 0xFF);
+			if (str[digits] > '9')
+				str[digits] = str[digits] - '0' - 10 + 'a';
+			nbr >>= 4;
 		}
 		nbr *= -1;
 		str[i++] = '-';
@@ -66,12 +68,19 @@ static void			format_integer(long long int nbr, t_specification spec,
 	while (digits != i)
 	{
 		digits--;
-		str[digits] = (nbr & 0x7) + '0';
-		nbr >>= 3;
+		str[digits] = (nbr & 0xFF) + '0';
+		if (str[digits] > '9')
+			str[digits] = str[digits] - '0' - 10 + 'a';
+		nbr >>= 4;
+	}
+	if (spec.alt_print)
+	{
+		str[digits + 1] = '0';
+		str[digits + 2] = 'x';
 	}
 }
 
-size_t				ft_oct_format(char **pdst, t_specification spec,
+size_t				ft_hex_format(char **pdst, t_specification spec,
 										va_list ap)
 {
 	long long int	nbr;
@@ -94,7 +103,7 @@ size_t				ft_oct_format(char **pdst, t_specification spec,
 		nbr = va_arg(ap, int);
 	num_digits = count_digits(nbr);
 	 if (spec.alt_print)
-		num_digits++;
+		num_digits += 2;
 	if (nbr == 0 && ((spec.precision_set && spec.precision != 0) || !spec.precision_set))
 		num_digits++;
 	if (nbr < 0)

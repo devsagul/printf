@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 19:57:29 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 20:08:05 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef	enum		e_specificator
 	STRING,
 	INTEGER,
 	OCT,
+	HEX,
+	HEX_UPPER,
 }					t_specificator;
 
 typedef struct		s_smartstr
@@ -85,6 +87,10 @@ size_t				ft_string_format(char **pdst, t_specification spec,
 size_t				ft_integer_format(char **pdst, t_specification spec,
 										va_list ap);
 size_t				ft_oct_format(char **pdst, t_specification spec,
+										va_list ap);
+size_t				ft_hex_format(char **pdst, t_specification spec,
+										va_list ap);
+size_t				ft_hex_upper_format(char **pdst, t_specification spec,
 										va_list ap);
 
 #endif

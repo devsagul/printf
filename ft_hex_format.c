@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_oct_format.c                                    :+:      :+:    :+:   */
+/*   ft_hex_format.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/24 19:42:55 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 20:03:44 by mbalon-s         ###   ########.fr       */
+/*   Created: 2019/02/24 19:59:02 by mbalon-s          #+#    #+#             */
+/*   Updated: 2019/02/24 20:37:55 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 #include <stdarg.h>
 #include "libftprintf.h"
 
-static int			count_digits(long long int nbr)
+static int			count_digits(unsigned long long int nbr)
 {
 	int		res;
 
 	res = 0;
 	while (nbr != 0)
 	{
-		nbr >>= 3;
+		nbr /= 16;
 		res++;
 	}
 	return (res);
 }
 
-static void			format_integer(long long int nbr, t_specification spec,
+static void			format_integer(unsigned long long int nbr, t_specification spec,
 									char *str)
 {
 	size_t			i;
@@ -48,35 +48,36 @@ static void			format_integer(long long int nbr, t_specification spec,
 		digits = spec.minwidth;
 	else
 		digits = spec.precision;
-	if (spec.force_sign && nbr >= 0)
+	if (spec.force_sign)
 		str[i++] = '+';
-	else if (spec.force_spacing && nbr >= 0)
+	else if (spec.force_spacing)
 		str[i++] = ' ';
-	else if (nbr < 0)
-	{
-		if (-nbr == nbr)
-		{
-			digits--;
-			str[digits] = '0' - (nbr & 0x7);
-			nbr >>= 3;
-		}
-		nbr *= -1;
-		str[i++] = '-';
-	}
 	while (digits != i)
 	{
 		digits--;
-		str[digits] = (nbr & 0x7) + '0';
-		nbr >>= 3;
+		str[digits] = (nbr & 0xF) + '0';
+		if (str[digits] > '9')
+			str[digits] = str[digits] - '0' - 10 + 'a';
+		nbr >>= 4;
+	}
+	if (spec.alt_print && !spec.align_left && !spec.force_zeroes)
+	{
+		str[digits] = '0';
+		str[digits + 1] = 'x';
+	}
+	else if (spec.alt_print)
+	{
+		str[0] = '0';
+		str[1] = 'x';
 	}
 }
 
-size_t				ft_oct_format(char **pdst, t_specification spec,
+size_t				ft_hex_format(char **pdst, t_specification spec,
 										va_list ap)
 {
-	long long int	nbr;
-	int				num_digits;
-	char			*str;
+	unsigned long long int	nbr;
+	int						num_digits;
+	char					*str;
 
 	if (spec.long_long_mod)
 		nbr = va_arg(ap, long long int);
@@ -85,21 +86,19 @@ size_t				ft_oct_format(char **pdst, t_specification spec,
 	else if	(spec.size_t_mod)
 		nbr = (ssize_t) va_arg(ap, ssize_t);
 	else if (spec.long_mod)
-		nbr = va_arg(ap, long int);
+		nbr = (unsigned long int) va_arg(ap, long int);
 	else if (spec.short_short_mod)
-		nbr = (char) va_arg(ap, int);
+		nbr = (unsigned char) va_arg(ap, int);
 	else if (spec.short_mod)
-		nbr = (short int) (unsigned int) va_arg(ap, int);
+		nbr = (unsigned short int) (unsigned int) va_arg(ap, int);
 	else
-		nbr = va_arg(ap, int);
+		nbr = (unsigned int) va_arg(ap, int);
 	num_digits = count_digits(nbr);
-	 if (spec.alt_print)
-		num_digits++;
+	if (spec.alt_print && nbr != 0)
+		num_digits += 2;
 	if (nbr == 0 && ((spec.precision_set && spec.precision != 0) || !spec.precision_set))
 		num_digits++;
-	if (nbr < 0)
-		spec.force_sign = 1;
-	if (nbr < 0 || spec.force_sign || spec.force_spacing)
+	if (spec.force_sign || spec.force_spacing)
 	{
 		num_digits++;
 		spec.precision++;
