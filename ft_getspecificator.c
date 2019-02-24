@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 17:33:46 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 20:41:54 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 21:15:52 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,14 @@ size_t				ft_getspecificator(const char *format,
 		pspec->specificator = HEX;
 	else if (*format == 'X')
 		pspec->specificator = HEX_UPPER;
+	else if (*format == 'u' || *format == 'U')
+		pspec->specificator = UNSIGNED;
 	else
 	{
 		pspec->specificator = UNKNOWN;
 		return (0);
 	}
+	if (*format == 'D' || *format == 'O' || *format == 'U')
+		pspec->long_long_mod = 1;
 	return (res);
 }

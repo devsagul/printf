@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_integer_format.c                                :+:      :+:    :+:   */
+/*   ft_unsigned_format.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/23 22:41:32 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 21:07:24 by mbalon-s         ###   ########.fr       */
+/*   Created: 2019/02/24 21:05:23 by mbalon-s          #+#    #+#             */
+/*   Updated: 2019/02/24 21:15:52 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include <stdlib.h>
 #include <stdarg.h>
 #include "libftprintf.h"
 
-static int			count_digits(long long int nbr)
+static int			count_digits(unsigned long long int nbr)
 {
 	int		res;
 
@@ -27,7 +28,7 @@ static int			count_digits(long long int nbr)
 	return (res);
 }
 
-static void			format_integer(long long int nbr, t_specification spec,
+static void			format_integer(unsigned long long int nbr, t_specification spec,
 									char *str)
 {
 	size_t			i;
@@ -48,21 +49,6 @@ static void			format_integer(long long int nbr, t_specification spec,
 		digits = spec.minwidth;
 	else
 		digits = spec.precision;
-	if (spec.force_sign && nbr >= 0)
-		str[i++] = '+';
-	else if (spec.force_spacing && nbr >= 0)
-		str[i++] = ' ';
-	else if (nbr < 0)
-	{
-		if (-nbr == nbr)
-		{
-			digits--;
-			str[digits] = '0' - nbr % 10;
-			nbr /= 10;
-		}
-		nbr *= -1;
-		str[i++] = '-';
-	}
 	while (digits != i)
 	{
 		digits--;
@@ -71,12 +57,12 @@ static void			format_integer(long long int nbr, t_specification spec,
 	}
 }
 
-size_t				ft_integer_format(char **pdst, t_specification spec,
+size_t				ft_unsigned_format(char **pdst, t_specification spec,
 										va_list ap)
 {
-	long long int	nbr;
-	int				num_digits;
-	char			*str;
+	unsigned long long int	nbr;
+	int						num_digits;
+	char					*str;
 
 	if (spec.long_long_mod)
 		nbr = va_arg(ap, long long int);
@@ -85,23 +71,16 @@ size_t				ft_integer_format(char **pdst, t_specification spec,
 	else if	(spec.size_t_mod)
 		nbr = (ssize_t) va_arg(ap, ssize_t);
 	else if (spec.long_mod)
-		nbr = va_arg(ap, long int);
+		nbr = (unsigned long int) va_arg(ap, long int);
 	else if (spec.short_short_mod)
-		nbr = (char) va_arg(ap, int);
+		nbr = (unsigned char) va_arg(ap, int);
 	else if (spec.short_mod)
-		nbr = (short int) (unsigned int) va_arg(ap, int);
+		nbr = (unsigned short int) (unsigned int) va_arg(ap, int);
 	else
-		nbr = va_arg(ap, int);
+		nbr = (unsigned int) va_arg(ap, int);
 	num_digits = count_digits(nbr);
 	if (nbr == 0 && ((spec.precision_set && spec.precision != 0) || !spec.precision_set))
 		num_digits++;
-	if (nbr < 0)
-		spec.force_sign = 1;
-	if (nbr < 0 || spec.force_sign || spec.force_spacing)
-	{
-		num_digits++;
-		spec.precision++;
-	}
 	if (!spec.precision_set || spec.precision < num_digits)
 		spec.precision = num_digits;
 	if (spec.minwidth < spec.precision)
