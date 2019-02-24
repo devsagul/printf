@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 22:41:32 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 16:58:37 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 18:15:03 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 
 static int			count_digits(long long int nbr)
 {
-	size_t			res;
+	int		res;
 
 	res = 0;
-	while (nbr)
+	while (nbr != (long long int) 0)
 	{
 		nbr /= 10;
 		res++;
@@ -44,20 +44,25 @@ static void			format_integer(long long int nbr, t_specification spec,
 		i = 0;
 	else
 		i = spec.minwidth - spec.precision;
-	if (spec.force_sign && nbr >= 0)
-		str[i++] = '+';
-	else if (spec.force_spacing && nbr >= 0)
-		str[i++] = ' ';
-	// process left long long value
-	else if (nbr < 0)
-	{
-		nbr *= -1;
-		str[i++] = '-';
-	}
 	if (!spec.align_left)
 		digits = spec.minwidth;
 	else
 		digits = spec.precision;
+	if (spec.force_sign && nbr >= 0)
+		str[i++] = '+';
+	else if (spec.force_spacing && nbr >= 0)
+		str[i++] = ' ';
+	else if (nbr < 0)
+	{
+		if (-nbr == nbr)
+		{
+			digits--;
+			str[digits] = '0' - nbr % 10;
+			nbr /= 10;
+		}
+		nbr *= -1;
+		str[i++] = '-';
+	}
 	while (digits != i)
 	{
 		digits--;
@@ -69,16 +74,18 @@ static void			format_integer(long long int nbr, t_specification spec,
 size_t				ft_integer_format(char **pdst, t_specification spec,
 										va_list ap)
 {
-	long long	nbr;
-	int			num_digits;
-	char		*str;
+	long long int	nbr;
+	int				num_digits;
+	char			*str;
 
 	if (spec.long_long_mod)
 		nbr = va_arg(ap, long long int);
-	if (spec.long_mod)
+	else if (spec.long_mod)
 		nbr = va_arg(ap, long int);
-	if (spec.short_mod || spec.short_short_mod)
-		nbr = (short int) va_arg(ap, int) & ((1 << sizeof(short int)) - 1);
+	else if (spec.short_short_mod)
+		nbr = (char) va_arg(ap, int);
+	else if (spec.short_mod)
+		nbr = (short int) (unsigned int) va_arg(ap, int);
 	else
 		nbr = va_arg(ap, int);
 	num_digits = count_digits(nbr);
