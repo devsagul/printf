@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 21:29:15 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 23:37:06 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ char				*ft_strncpy(char *dst, const char *src, size_t len);
 size_t				ft_getspecificator(const char *format,
 										t_specification *pspec);
 size_t				ft_percent_format(char **pdst, t_specification spec);
+size_t				ft_unknown_format(char **pdst, t_specification spec);
 size_t				ft_char_format(char **pdst, t_specification spec,
 									va_list ap);
 size_t				ft_string_format(char **pdst, t_specification spec,

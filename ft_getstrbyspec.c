@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:48:05 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 21:19:41 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 23:36:54 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,14 @@ void				ft_getstrbyspec(t_specification spec,
 	if (spec.specificator == PERCENT)
 	{
 		len = ft_percent_format(&s, spec);
+		ft_smartstrncat(pbuf, s, len);
+		if (s != NULL)
+			free(s);
+		return ;
+	}
+	if (spec.specificator == UNKNOWN)
+	{
+		len = ft_unknown_format(&s, spec);
 		ft_smartstrncat(pbuf, s, len);
 		if (s != NULL)
 			free(s);
