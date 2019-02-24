@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:17:31 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 22:07:06 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 23:55:22 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,16 @@ static size_t	progress_buffer(const char *format,
 	ft_bzero(&spec, sizeof(spec));
 	res += get_specification(format, &spec);
 	if (spec.wildcard_minwidth)
-		spec.minwidth = va_arg(ap, int);
+	{
+		spec.minwidth = (int) va_arg(ap, int);
+		if (spec.minwidth < 0)
+		{
+			spec.align_left = 1;
+			spec.minwidth *= -1;
+		}
+	}
 	if (spec.wildcard_precision)
-		spec.precision = va_arg(ap, int);
+		spec.precision = (int) va_arg(ap, int);
 	ft_getstrbyspec(spec, pbuf, ap);
 	return (res);
 }

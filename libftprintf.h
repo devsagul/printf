@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 23:37:06 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 23:46:46 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct		s_specification
 	int				minwidth;
 	int				precision;
 	t_specificator	specificator;
+	char			ch;
 	unsigned		align_left : 1;
 	unsigned		force_sign : 1;
 	unsigned		force_spacing : 1;

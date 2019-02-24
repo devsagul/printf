@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 23:36:50 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 23:40:31 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 23:58:16 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@ size_t				ft_unknown_format(char **pdst, t_specification spec)
 	int		len;
 	char	*str;
 
+	if (spec.ch == '\0')
+	{
+		*pdst = NULL;
+		return (0);
+	}
 	len = 0;
-	spec.minwidth--;
 	if (!spec.precision_set)
 		spec.precision = len;
 	if (len < spec.precision)
@@ -35,6 +39,10 @@ size_t				ft_unknown_format(char **pdst, t_specification spec)
 	else
 		ft_memset(str, '0', sizeof(char) * spec.minwidth);
 	str[spec.minwidth] = '\0';
+	if (spec.align_left)
+		str[0] = spec.ch;
+	else
+		str[spec.minwidth - 1] = spec.ch;
 	*pdst = str;
 	return (spec.minwidth);
 }
