@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 19:42:55 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 20:03:44 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 22:07:35 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int			count_digits(long long int nbr)
 	res = 0;
 	while (nbr != 0)
 	{
-		nbr >>= 3;
+		nbr /= 8;
 		res++;
 	}
 	return (res);
@@ -58,7 +58,7 @@ static void			format_integer(long long int nbr, t_specification spec,
 		{
 			digits--;
 			str[digits] = '0' - (nbr & 0x7);
-			nbr >>= 3;
+			nbr /= 8;
 		}
 		nbr *= -1;
 		str[i++] = '-';

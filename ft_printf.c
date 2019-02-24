@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:17:31 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 19:40:16 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 22:07:06 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ static size_t	get_specification(const char *format,
 			s++;
 		}
 	}
+	while (ft_instr(*s, ".0123456789"))
+		s++;
 	s += get_mods(s, pspec);
 	s += ft_getspecificator(s, pspec);
 	return (s - format);
