@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_integer_format.c                                :+:      :+:    :+:   */
+/*   ft_oct_format.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/23 22:41:32 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 19:57:31 by mbalon-s         ###   ########.fr       */
+/*   Created: 2019/02/24 19:42:55 by mbalon-s          #+#    #+#             */
+/*   Updated: 2019/02/24 19:57:28 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int			count_digits(long long int nbr)
 	res = 0;
 	while (nbr != 0)
 	{
-		nbr /= 10;
+		nbr >>= 3;
 		res++;
 	}
 	return (res);
@@ -57,8 +57,8 @@ static void			format_integer(long long int nbr, t_specification spec,
 		if (-nbr == nbr)
 		{
 			digits--;
-			str[digits] = '0' - nbr % 10;
-			nbr /= 10;
+			str[digits] = '0' - (nbr & 0x7);
+			nbr >>= 3;
 		}
 		nbr *= -1;
 		str[i++] = '-';
@@ -66,12 +66,12 @@ static void			format_integer(long long int nbr, t_specification spec,
 	while (digits != i)
 	{
 		digits--;
-		str[digits] = nbr % 10 + '0';
-		nbr /= 10;
+		str[digits] = (nbr & 0x7) + '0';
+		nbr >>= 3;
 	}
 }
 
-size_t				ft_integer_format(char **pdst, t_specification spec,
+size_t				ft_oct_format(char **pdst, t_specification spec,
 										va_list ap)
 {
 	long long int	nbr;
@@ -93,6 +93,8 @@ size_t				ft_integer_format(char **pdst, t_specification spec,
 	else
 		nbr = va_arg(ap, int);
 	num_digits = count_digits(nbr);
+	 if (spec.alt_print)
+		num_digits++;
 	if (nbr == 0 && ((spec.precision_set && spec.precision != 0) || !spec.precision_set))
 		num_digits++;
 	if (nbr < 0)

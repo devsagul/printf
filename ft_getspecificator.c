@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 17:33:46 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/23 23:30:51 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 19:45:11 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ size_t				ft_getspecificator(const char *format,
 		pspec->specificator = STRING;
 	else if (*format == 'd' || *format == 'i')
 		pspec->specificator = INTEGER;
+	else if (*format == 'o')
+		pspec->specificator = OCT;
 	else
 	{
 		pspec->specificator = UNKNOWN;
