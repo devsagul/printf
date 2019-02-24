@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 15:50:30 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 19:40:16 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct		s_specification
 	unsigned		long_mod : 1;
 	unsigned		long_long_mod : 1;
 	unsigned		long_double_mod : 1;
+	unsigned		size_t_mod : 1;
+	unsigned		intmax_t_mod : 1;
 }					t_specification;
 
 typedef size_t		(*t_outputfunc) (char **pstr, t_specification, va_list);

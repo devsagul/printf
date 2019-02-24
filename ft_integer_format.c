@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 22:41:32 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 18:15:03 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 19:40:15 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ size_t				ft_integer_format(char **pdst, t_specification spec,
 
 	if (spec.long_long_mod)
 		nbr = va_arg(ap, long long int);
+	else if	(spec.intmax_t_mod)
+		nbr = (intmax_t) va_arg(ap, intmax_t);
+	else if	(spec.size_t_mod)
+		nbr = (ssize_t) va_arg(ap, ssize_t);
 	else if (spec.long_mod)
 		nbr = va_arg(ap, long int);
 	else if (spec.short_short_mod)

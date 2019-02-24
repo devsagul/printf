@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:17:31 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 18:15:04 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/24 19:40:16 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static size_t	get_mods(const char *format, t_specification *pspec)
 	const char	*s;
 
 	s = format;
-	while (ft_instr(*s, "-+ 0#hlL"))
+	while (ft_instr(*s, "-+ 0#hlLzj"))
 	{
 		if (*s == '-')
 			pspec->align_left = 1;
@@ -48,6 +48,10 @@ static size_t	get_mods(const char *format, t_specification *pspec)
 		}
 		else if (*s == 'L')
 			pspec->long_double_mod = 1;
+		else if (*s == 'z')
+			pspec->size_t_mod = 1;
+		else if (*s == 'j')
+			pspec->intmax_t_mod = 1;
 		s++;
 	}
 	return (s - format);
