@@ -33,13 +33,13 @@ static void			format_integer(unsigned long long int nbr, t_specification spec,
 	size_t			i;
 	size_t			digits;
 
-	ft_memset(str, ' ', sizeof(char) * spec.minwidth);
+	ft_memset(str, ' ', spec.minwidth);
 	if (spec.force_zeroes && spec.align_left)
-		ft_memset(str, '0', sizeof(char) * spec.precision);
+		ft_memset(str, '0', spec.precision);
 	else if (spec.force_zeroes && !spec.precision_set)
-		ft_memset(str, '0', sizeof(char) * spec.minwidth);
+		ft_memset(str, '0', spec.minwidth);
 	else if (spec.force_zeroes && spec.precision != 0)
-		ft_memset(str + spec.minwidth - spec.precision, '0', sizeof(char) * spec.precision);
+		ft_memset(str + spec.minwidth - spec.precision, '0', spec.precision);
 	if (spec.align_left || (spec.force_sign && spec.force_zeroes))
 		i = 0;
 	else
