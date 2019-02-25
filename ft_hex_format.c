@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 19:59:02 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/25 22:11:59 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/25 23:05:58 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void			format_integer(unsigned long long int nbr, t_specification spec,
 		str[digits] = (nbr & 0xF) + '0';
 		if (str[digits] > '9')
 			str[digits] = str[digits] - '0' - 10 + 'a';
-		nbr >>= 4;
+		nbr /= 16;
 	}
 	if (spec.alt_print && !spec.align_left && !spec.force_zeroes)
 	{

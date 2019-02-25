@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 22:41:32 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/25 19:38:37 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/25 23:14:06 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,9 @@ static void			format_integer(long long int nbr, t_specification spec,
 	size_t			digits;
 
 	ft_memset(str, ' ', sizeof(char) * spec.minwidth);
-	if (spec.force_zeroes && spec.align_left)
-		ft_memset(str, '0', sizeof(char) * spec.precision);
-	else if (spec.force_zeroes && !spec.precision_set)
+	if (spec.force_zeroes && !spec.precision_set && !spec.align_left)
 		ft_memset(str, '0', sizeof(char) * spec.minwidth);
-	else if (spec.force_zeroes && spec.precision != 0)
+	else if (spec.force_zeroes && spec.precision != 0 && !spec.align_left)
 		ft_memset(str + spec.minwidth - spec.precision, '0', sizeof(char) * spec.precision);
 	if (spec.align_left || (spec.force_sign && spec.force_zeroes))
 		i = 0;
