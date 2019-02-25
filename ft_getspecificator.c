@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 17:33:46 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/25 00:00:04 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/25 22:00:54 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ size_t				ft_getspecificator(const char *format,
 	res = 1;
 	if (*format == '%')
 		pspec->specificator = PERCENT;
-	else if (*format == 'c')
+	else if (*format == 'c' || *format == 'C')
 		pspec->specificator = CHAR;
-	else if (*format == 's')
+	else if (*format == 's' || *format == 'S')
 		pspec->specificator = STRING;
 	else if (*format == 'd' || *format == 'i' || *format == 'D')
 		pspec->specificator = INTEGER;
@@ -43,7 +43,7 @@ size_t				ft_getspecificator(const char *format,
 		pspec->ch = *format;
 		return (*format == '\0' ? 0 : 1);
 	}
-	if (*format == 'D' || *format == 'O' || *format == 'U')
+	if (*format == 'D' || *format == 'O' || *format == 'U' || *format == 'C' || *format == 'S')
 		pspec->long_long_mod = 1;
 	return (res);
 }
