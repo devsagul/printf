@@ -17,6 +17,8 @@ SOURCES = ft_printf.c			\
 		  ft_strlen.c			\
 		  ft_strncpy.c			\
 		  ft_getspecificator.c	\
+		  ft_get_signed_arg.c   \
+		  ft_get_unsigned_arg.c \
 		  ft_percent_format.c	\
 		  ft_unknown_format.c	\
 		  ft_char_format.c		\
