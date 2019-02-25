@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 19:42:55 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/25 19:01:22 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/25 22:11:56 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,12 @@ size_t				ft_oct_format(char **pdst, t_specification spec,
 	else if (spec.short_mod)
 		nbr = (unsigned short int) va_arg(ap, int);
 	else
-		nbr = va_arg(ap, int);
+		nbr = (unsigned) va_arg(ap, int);
 	num_digits = count_digits(nbr);
 	if (spec.alt_print && nbr != 0)
 		num_digits++;
 	if (nbr == 0 && ((spec.precision_set && spec.precision != 0) || !spec.precision_set || spec.alt_print))
 		num_digits++;
-	if ( spec.force_sign || spec.force_spacing)
-	{
-		num_digits++;
-		spec.precision++;
-	}
 	if (!spec.precision_set || spec.precision < num_digits)
 		spec.precision = num_digits;
 	if (spec.minwidth < spec.precision)

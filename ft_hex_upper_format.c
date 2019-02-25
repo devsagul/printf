@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 20:37:32 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 20:37:54 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/25 22:12:40 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,6 @@ static void			format_integer(unsigned long long int nbr, t_specification spec,
 		digits = spec.minwidth;
 	else
 		digits = spec.precision;
-	if (spec.force_sign)
-		str[i++] = '+';
-	else if (spec.force_spacing)
-		str[i++] = ' ';
 	while (digits != i)
 	{
 		digits--;
@@ -98,11 +94,6 @@ size_t				ft_hex_upper_format(char **pdst, t_specification spec,
 		num_digits += 2;
 	if (nbr == 0 && ((spec.precision_set && spec.precision != 0) || !spec.precision_set))
 		num_digits++;
-	if (spec.force_sign || spec.force_spacing)
-	{
-		num_digits++;
-		spec.precision++;
-	}
 	if (!spec.precision_set || spec.precision < num_digits)
 		spec.precision = num_digits;
 	if (spec.minwidth < spec.precision)
