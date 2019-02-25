@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 21:17:46 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 21:47:21 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/25 20:22:10 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,14 @@ size_t				ft_pointer_format(char **pdst, t_specification spec,
 
 	nbr = (unsigned long long) va_arg(ap, void *);
 	num_digits = count_digits(nbr);
-	spec.precision = num_digits + 2;
 	if (nbr == 0)
-		spec.precision = 3;
+	{
+		if (spec.precision_set && spec.precision == 0)
+			spec.precision = 2;
+		else if (!spec.precision_set || spec.precision < 3)
+			spec.precision = 3;
+	}
+	else spec.precision = num_digits + 2;
 	if (spec.minwidth < spec.precision)
 		spec.minwidth = spec.precision;
 	str = (char *)malloc(sizeof(char) * spec.minwidth + 1);

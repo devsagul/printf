@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 19:32:43 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 23:39:40 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/25 20:04:06 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ size_t				ft_string_format(char **pdst, t_specification spec,
 		spec.precision = len;
 	if (len < spec.precision)
 		spec.precision = len;
-	if (spec.minwidth < len)
+	if (spec.minwidth < spec.precision)
 		spec.minwidth = spec.precision;
 	str = (char *)malloc(sizeof(char) * (spec.minwidth + 1));
 	if (str == NULL)
