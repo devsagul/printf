@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 22:41:32 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 21:07:24 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/25 19:38:37 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,11 @@ size_t				ft_integer_format(char **pdst, t_specification spec,
 		nbr = va_arg(ap, int);
 	num_digits = count_digits(nbr);
 	if (nbr == 0 && ((spec.precision_set && spec.precision != 0) || !spec.precision_set))
+	{
 		num_digits++;
+		if (spec.force_zeroes && !spec.align_left)
+			num_digits++;
+	}
 	if (nbr < 0)
 		spec.force_sign = 1;
 	if (nbr < 0 || spec.force_sign || spec.force_spacing)
