@@ -83,6 +83,8 @@ size_t					ft_strlen(const char *s);
 char					*ft_strncpy(char *dst, const char *src, size_t len);
 size_t					ft_getspecificator(const char *format,
 										t_specification *pspec);
+int						ft_count_digits_unsigned(unsigned long long int nbr,
+													unsigned base);
 long long int			ft_get_signed_arg(va_list ap, t_specification spec);
 unsigned long long int	ft_get_unsigned_arg(va_list ap, t_specification spec);
 size_t					ft_percent_format(char **pdst, t_specification spec);

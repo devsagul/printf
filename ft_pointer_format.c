@@ -14,19 +14,6 @@
 #include <stdarg.h>
 #include "libftprintf.h"
 
-static int			count_digits(unsigned long long int nbr)
-{
-	int		res;
-
-	res = 0;
-	while (nbr != 0)
-	{
-		nbr /= 16;
-		res++;
-	}
-	return (res);
-}
-
 static void			format_integer(unsigned long long int nbr,
 									t_specification spec,
 									char *str)
@@ -58,7 +45,7 @@ size_t				ft_pointer_format(char **pdst, t_specification spec,
 	char					*str;
 
 	nbr = (unsigned long long)va_arg(ap, void *);
-	num_digits = count_digits(nbr);
+	num_digits = ft_count_digits_unsigned(nbr, 16);
 	if (nbr == 0)
 		if (spec.precision_set && spec.precision == 0)
 			spec.precision = 2;

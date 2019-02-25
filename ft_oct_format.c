@@ -14,20 +14,8 @@
 #include <stdarg.h>
 #include "libftprintf.h"
 
-static int			count_digits(unsigned long long int nbr)
-{
-	int		res;
-
-	res = 0;
-	while (nbr != 0)
-	{
-		nbr /= 8;
-		res++;
-	}
-	return (res);
-}
-
-static void			format_integer(unsigned long long int nbr, t_specification spec,
+static void			format_integer(unsigned long long int nbr,
+									t_specification spec,
 									char *str)
 {
 	size_t			i;
@@ -39,7 +27,7 @@ static void			format_integer(unsigned long long int nbr, t_specification spec,
 	else if (spec.force_zeroes && !spec.precision_set)
 		ft_memset(str, '0', sizeof(char) * spec.minwidth);
 	else if (spec.force_zeroes && spec.precision != 0)
-		ft_memset(str + spec.minwidth - spec.precision, '0', sizeof(char) * spec.precision);
+		ft_memset(str + spec.minwidth - spec.precision, '0', spec.precision);
 	if (spec.align_left || (spec.force_sign && spec.force_zeroes))
 		i = 0;
 	else
@@ -52,7 +40,7 @@ static void			format_integer(unsigned long long int nbr, t_specification spec,
 	{
 		digits--;
 		str[digits] = (nbr & 0x7) + '0';
-		nbr /= 8;
+		nbr >>= 3;
 	}
 }
 
@@ -63,24 +51,12 @@ size_t				ft_oct_format(char **pdst, t_specification spec,
 	int						num_digits;
 	char					*str;
 
-	if (spec.long_long_mod)
-		nbr = va_arg(ap, long long int);
-	else if	(spec.intmax_t_mod)
-		nbr = (intmax_t) va_arg(ap, intmax_t);
-	else if	(spec.size_t_mod)
-		nbr = (ssize_t) va_arg(ap, ssize_t);
-	else if (spec.long_mod)
-		nbr = va_arg(ap, long int);
-	else if (spec.short_short_mod)
-		nbr = (unsigned char) va_arg(ap, int);
-	else if (spec.short_mod)
-		nbr = (unsigned short int) va_arg(ap, int);
-	else
-		nbr = (unsigned) va_arg(ap, int);
-	num_digits = count_digits(nbr);
+	nbr = ft_get_unsigned_arg(ap, spec);
+	num_digits = ft_count_digits_unsigned(nbr, 8);
 	if (spec.alt_print && nbr != 0)
 		num_digits++;
-	if (nbr == 0 && ((spec.precision_set && spec.precision != 0) || !spec.precision_set || spec.alt_print))
+	if (nbr == 0 && ((spec.precision_set && spec.precision != 0) ||
+						!spec.precision_set || spec.alt_print))
 		num_digits++;
 	if (!spec.precision_set || spec.precision < num_digits)
 		spec.precision = num_digits;
