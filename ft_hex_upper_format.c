@@ -90,6 +90,8 @@ size_t				ft_hex_upper_format(char **pdst, t_specification spec,
 	else
 		nbr = (unsigned int) va_arg(ap, int);
 	num_digits = count_digits(nbr);
+	if (nbr == 0)
+	    spec.alt_print = 0;
 	if (spec.alt_print && nbr != 0)
 		num_digits += 2;
 	if (nbr == 0 && ((spec.precision_set && spec.precision != 0) || !spec.precision_set))

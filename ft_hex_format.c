@@ -63,6 +63,8 @@ size_t				ft_hex_format(char **pdst, t_specification spec,
     char					*str;
 
     nbr = ft_get_unsigned_arg(ap, spec);
+    if (nbr == 0)
+    	spec.alt_print = 0;
     num_digits = ft_count_digits_unsigned(nbr, 16);
 	if (spec.alt_print && nbr != 0)
 	{

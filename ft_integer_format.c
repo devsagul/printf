@@ -96,7 +96,7 @@ size_t				ft_integer_format(char **pdst, t_specification spec,
 	if (nbr == 0 && ((spec.precision_set && spec.precision != 0) || !spec.precision_set))
 	{
 		num_digits++;
-		if (spec.force_zeroes && !spec.align_left)
+		if (spec.force_spacing && !spec.align_left && nbr != 0)
 			num_digits++;
 	}
 	if (nbr < 0)
