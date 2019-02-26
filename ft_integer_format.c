@@ -40,7 +40,7 @@ static void			format_integer(long long int nbr, t_specification spec,
 		ft_memset(str, '0', spec.minwidth);
 	else if (spec.force_zeroes && spec.precision != 0)
 		ft_memset(str + spec.minwidth - spec.precision, '0', spec.precision);
-	if (spec.align_left || (spec.force_sign && spec.force_zeroes))
+	if (spec.align_left || (spec.force_zeroes && !spec.precision_set))
 		i = 0;
 	else
 		i = spec.minwidth - spec.precision;
@@ -94,14 +94,8 @@ size_t				ft_integer_format(char **pdst, t_specification spec,
 		nbr = va_arg(ap, int);
 	num_digits = count_digits(nbr);
 	if (nbr == 0 && ((spec.precision_set && spec.precision != 0) || !spec.precision_set))
-	{
 		num_digits++;
-		if (spec.force_spacing && !spec.align_left && nbr != 0)
-			num_digits++;
-	}
-	if (nbr < 0)
-		spec.force_sign = 1;
-	if (nbr < 0 || spec.force_sign || spec.force_spacing)
+	if (nbr < 0 || spec.force_sign || ((spec.force_spacing)))
 	{
 		num_digits++;
 		spec.precision++;
