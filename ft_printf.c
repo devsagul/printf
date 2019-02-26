@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:17:31 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 23:55:22 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/25 21:59:21 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,19 @@ static size_t	get_specification(const char *format,
 
 	s = format;
 	s += get_mods(s, pspec);
+	if (*s == '*')
+	{
+		pspec->wildcard_minwidth = 1;
+		s++;
+	}
 	if (*s >= '1' && *s <= '9')
 	{
 		s += ft_ulfromstr(s, &tmp);
 		pspec->minwidth = tmp;
 	}
-	else if (*s == '*')
+	if (*s == '*')
 	{
+		pspec->minwidth = 0;
 		pspec->wildcard_minwidth = 1;
 		s++;
 	}
@@ -104,6 +110,7 @@ static size_t	progress_buffer(const char *format,
 	char			*s;
 	t_specification	spec;
 	size_t			res;
+	int tmp;
 
 	if (*format != '%')
 	{
@@ -119,15 +126,23 @@ static size_t	progress_buffer(const char *format,
 	res += get_specification(format, &spec);
 	if (spec.wildcard_minwidth)
 	{
-		spec.minwidth = (int) va_arg(ap, int);
-		if (spec.minwidth < 0)
+		tmp = (int) va_arg(ap, int);
+		if (spec.minwidth == 0)
 		{
-			spec.align_left = 1;
-			spec.minwidth *= -1;
+			spec.minwidth = tmp;
+			if (spec.minwidth < 0)
+			{
+				spec.align_left = 1;
+				spec.minwidth *= -1;
+			}
 		}
 	}
 	if (spec.wildcard_precision)
+	{
 		spec.precision = (int) va_arg(ap, int);
+		if (spec.precision < 0)
+			spec.precision_set = 0;
+	}
 	ft_getstrbyspec(spec, pbuf, ap);
 	return (res);
 }

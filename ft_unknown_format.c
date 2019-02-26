@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 23:36:50 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 23:58:16 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/25 19:07:29 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ size_t				ft_unknown_format(char **pdst, t_specification spec)
 		*pdst = NULL;
 		return (0);
 	}
-	len = 0;
+	len = 1;
 	if (!spec.precision_set)
 		spec.precision = len;
 	if (len < spec.precision)

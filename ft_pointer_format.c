@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 21:17:46 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 21:47:21 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/25 21:41:15 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,27 @@
 #include <stdarg.h>
 #include "libftprintf.h"
 
-static int			count_digits(unsigned long long int nbr)
-{
-	int		res;
-
-	res = 0;
-	while (nbr != 0)
-	{
-		nbr /= 16;
-		res++;
-	}
-	return (res);
-}
-
-static void			format_integer(unsigned long long int nbr, t_specification spec,
+static void			format_integer(unsigned long long int nbr,
+									t_specification spec,
 									char *str)
 {
 	size_t			i;
 	size_t			digits;
 
 	ft_memset(str, ' ', sizeof(char) * spec.minwidth);
-	if (spec.align_left)
-		i = 0;
-	else
-		i = spec.minwidth - spec.precision;
-	if (!spec.align_left)
-		digits = spec.minwidth;
-	else
-		digits = spec.precision;
+	i = spec.align_left ? 0 : spec.minwidth - spec.precision;
+	digits = spec.align_left ? spec.precision : spec.minwidth;
 	while (digits != i)
 	{
 		digits--;
 		str[digits] = (nbr & 0xF) + '0';
 		if (str[digits] > '9')
 			str[digits] = str[digits] - '0' - 10 + 'a';
-		nbr >>= 4;
+		nbr /= 16;
 	}
-	if (!spec.align_left && !spec.force_zeroes)
-	{
-		str[digits] = '0';
-		str[digits + 1] = 'x';
-	}
-	else
-	{
-		str[0] = '0';
-		str[1] = 'x';
-	}
+	i = !(spec.align_left || spec.force_zeroes) ? digits : 0;
+	str[i] = '0';
+	str[i + 1] = 'x';
 }
 
 size_t				ft_pointer_format(char **pdst, t_specification spec,
@@ -69,11 +44,18 @@ size_t				ft_pointer_format(char **pdst, t_specification spec,
 	int						num_digits;
 	char					*str;
 
-	nbr = (unsigned long long) va_arg(ap, void *);
-	num_digits = count_digits(nbr);
-	spec.precision = num_digits + 2;
+	nbr = (unsigned long long)va_arg(ap, void *);
+	num_digits = ft_count_digits_unsigned(nbr, 16);
 	if (nbr == 0)
-		spec.precision = 3;
+		if (spec.precision_set && spec.precision == 0)
+			spec.precision = 2;
+		else
+			spec.precision = (!spec.precision_set || spec.precision < 3) ?
+					3 : spec.precision + 2;
+	else if (!spec.precision_set || spec.precision < num_digits + 2)
+		spec.precision = num_digits + 2;
+	else
+		spec.precision += 2;
 	if (spec.minwidth < spec.precision)
 		spec.minwidth = spec.precision;
 	str = (char *)malloc(sizeof(char) * spec.minwidth + 1);

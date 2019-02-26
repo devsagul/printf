@@ -7,4 +7,7 @@
 # archive files
 *.a
 
+# idea files
+.idea/
+
 main.c

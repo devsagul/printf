@@ -15,6 +15,7 @@
 t_smartstr	*ft_smartstrncat(t_smartstr *smartstr, const char *s, size_t len)
 {
 	size_t	i;
+	size_t	j;
 	ssize_t	tmp;
 
 	if (s == NULL)
@@ -34,8 +35,9 @@ t_smartstr	*ft_smartstrncat(t_smartstr *smartstr, const char *s, size_t len)
 		}
 	}
 	i = smartstr->len;
-	while (*s != '\0')
-		smartstr->str[i++] = *s++;
+	j = 0;
+	while (j < len)
+		smartstr->str[i++] = s[j++];
 	smartstr->str[i] = '\0';
 	smartstr->len += len;
 	return (smartstr);

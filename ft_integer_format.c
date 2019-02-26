@@ -6,7 +6,7 @@
 /*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 22:41:32 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/24 21:07:24 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/25 23:14:06 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ static void			format_integer(long long int nbr, t_specification spec,
 	size_t			i;
 	size_t			digits;
 
-	ft_memset(str, ' ', sizeof(char) * spec.minwidth);
+	ft_memset(str, ' ', spec.minwidth);
 	if (spec.force_zeroes && spec.align_left)
-		ft_memset(str, '0', sizeof(char) * spec.precision);
+		ft_memset(str, '0', spec.precision);
 	else if (spec.force_zeroes && !spec.precision_set)
-		ft_memset(str, '0', sizeof(char) * spec.minwidth);
+		ft_memset(str, '0', spec.minwidth);
 	else if (spec.force_zeroes && spec.precision != 0)
-		ft_memset(str + spec.minwidth - spec.precision, '0', sizeof(char) * spec.precision);
-	if (spec.align_left || (spec.force_sign && spec.force_zeroes))
+		ft_memset(str + spec.minwidth - spec.precision, '0', spec.precision);
+	if (spec.align_left || (spec.force_zeroes && !spec.precision_set))
 		i = 0;
 	else
 		i = spec.minwidth - spec.precision;
@@ -95,9 +95,7 @@ size_t				ft_integer_format(char **pdst, t_specification spec,
 	num_digits = count_digits(nbr);
 	if (nbr == 0 && ((spec.precision_set && spec.precision != 0) || !spec.precision_set))
 		num_digits++;
-	if (nbr < 0)
-		spec.force_sign = 1;
-	if (nbr < 0 || spec.force_sign || spec.force_spacing)
+	if (nbr < 0 || spec.force_sign || ((spec.force_spacing)))
 	{
 		num_digits++;
 		spec.precision++;
