@@ -93,6 +93,8 @@ size_t					ft_char_format(char **pdst, t_specification spec,
 									va_list ap);
 size_t					ft_string_format(char **pdst, t_specification spec,
 										va_list ap);
+size_t					ft_unicode_format(char **pdst, t_specification spec,
+										   va_list ap);
 size_t					ft_integer_format(char **pdst, t_specification spec,
 										va_list ap);
 size_t					ft_oct_format(char **pdst, t_specification spec,

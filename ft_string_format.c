@@ -21,6 +21,8 @@ size_t				ft_string_format(char **pdst, t_specification spec,
 	char	*str;
 	char	*arg;
 
+	if (spec.long_long_mod || spec.long_mod)
+	    return (ft_unicode_format(pdst, spec, ap));
 	arg = (char *)va_arg(ap, char *);
 	if (arg == NULL)
 		arg = "(null)";

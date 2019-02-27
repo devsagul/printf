@@ -1,7 +1,7 @@
 NAME = libftprintf.a
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -I . -c
+CFLAGS = -Wall -Wextra -Werror -I . -c -g
 
 SOURCES = ft_printf.c			        \
 		  ft_getstrbyspec.c		        \
@@ -24,6 +24,7 @@ SOURCES = ft_printf.c			        \
 		  ft_unknown_format.c	        \
 		  ft_char_format.c		        \
 		  ft_string_format.c	        \
+		  ft_unicode_format.c           \
 		  ft_integer_format.c	        \
 		  ft_oct_format.c		        \
 		  ft_hex_format.c		        \

@@ -44,6 +44,7 @@ void				ft_getstrbyspec(t_specification spec,
 	size_t			len;
 	char			*s;
 
+	s = NULL;
 	if (spec.specificator == PERCENT)
 	{
 		len = ft_percent_format(&s, spec);
