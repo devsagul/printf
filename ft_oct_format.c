@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_oct_format.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 19:42:55 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/25 23:06:33 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/28 21:06:33 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdarg.h>
 #include "libftprintf.h"
 
-static void			format_integer(unsigned long long int nbr,
+static void			format_oct(unsigned long long int nbr,
 									t_specification spec,
 									char *str)
 {
@@ -40,7 +40,7 @@ static void			format_integer(unsigned long long int nbr,
 	{
 		digits--;
 		str[digits] = (nbr & 0x7) + '0';
-		nbr >>= 3;
+		nbr /= 8;
 	}
 }
 
@@ -66,7 +66,7 @@ size_t				ft_oct_format(char **pdst, t_specification spec,
 	if (str == NULL)
 		return (0);
 	str[spec.minwidth] = '\0';
-	format_integer(nbr, spec, str);
+	format_oct(nbr, spec, str);
 	*pdst = str;
 	return (spec.minwidth);
 }
