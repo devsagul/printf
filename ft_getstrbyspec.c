@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getstrbyspec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:48:05 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/25 19:03:40 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/28 20:04:42 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,16 @@ void				ft_getstrbyspec(t_specification spec,
 	char			*s;
 
 	s = NULL;
-	if (spec.specificator == PERCENT)
+	if (spec.specificator == PERCENT || spec.specificator == UNKNOWN)
+		len = spec.specificator == PERCENT ?
+				ft_percent_format(&s, spec) : ft_unknown_format(&s, spec);
+	else
 	{
-		len = ft_percent_format(&s, spec);
-		ft_smartstrncat(pbuf, s, len);
-		if (s != NULL)
-			free(s);
-		return ;
+		output_function = get_output_function(spec.specificator);
+		if (output_function == NULL)
+			return ;
+		len = output_function(&s, spec, ap);
 	}
-	if (spec.specificator == UNKNOWN)
-	{
-		len = ft_unknown_format(&s, spec);
-		ft_smartstrncat(pbuf, s, len);
-		if (s != NULL)
-			free(s);
-		return ;
-	}
-	output_function = get_output_function(spec.specificator);
-	if (output_function == NULL)
-		return ;
-	len = output_function(&s, spec, ap);
 	ft_smartstrncat(pbuf, s, len);
 	if (s != NULL)
 		free(s);
