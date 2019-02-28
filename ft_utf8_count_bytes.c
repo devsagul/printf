@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utf8_count_bytes.c                                 :+:      :+:    :+:   */
+/*   ft_utf8_count_bytes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 19:32:25 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/28 19:43:15 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/28 19:53:32 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-int			utf8_count_bytes(unsigned int c)
+int			ft_utf8_count_bytes(unsigned int c)
 {
 	if (c <= 0x7F)
 		return (1);

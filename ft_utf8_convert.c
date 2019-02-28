@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utf8_convert.c                                     :+:      :+:    :+:   */
+/*   ft_utf8_convert.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 19:32:55 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/28 19:33:13 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/28 19:53:36 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-unsigned int	utf8_convert(unsigned int c, int bytes)
+unsigned int	ft_utf8_convert(unsigned int c, int bytes)
 {
 	unsigned int	res;
 
