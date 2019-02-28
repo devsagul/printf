@@ -31,8 +31,8 @@ SOURCES = ft_printf.c			        \
 		  ft_hex_upper_format.c	        \
 		  ft_unsigned_format.c	        \
 		  ft_pointer_format.c			\
-		  utf8_count_bytes.c			\
-		  utf8_convert.c				\
+		  ft_utf8_count_bytes.c			\
+		  ft_utf8_convert.c				\
 
 OBJECTS = $(SOURCES:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 18:58:19 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/28 19:38:41 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/28 19:42:03 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static size_t		unicode_char_format(char **pdst, t_specification spec,
 	int				i;
 
 	c = va_arg(ap, unsigned int);
-	bytes = utf8_count_bytes(c);
+	bytes = ft_utf8_count_bytes(c);
 	res = bytes >= spec.minwidth ? bytes : spec.minwidth;
 	str = (char *)malloc(res + 1);
 	if (str == NULL)
@@ -35,7 +35,7 @@ static size_t		unicode_char_format(char **pdst, t_specification spec,
 	if (bytes == 0)
 		return (res);
 	i = spec.align_left ? 0 : res - bytes;
-	c = utf8_convert(c, bytes);
+	c = ft_utf8_convert(c, bytes);
 	while (bytes)
 	{
 		bytes--;

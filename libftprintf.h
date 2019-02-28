@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/28 19:29:33 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/28 19:43:41 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ size_t					ft_unsigned_format(char **pdst, t_specification spec,
 										va_list ap);
 size_t					ft_pointer_format(char **pdst, t_specification spec,
 										va_list ap);
-int						utf8_count_bytes(unsigned int c);
-unsigned int			utf8_convert(unsigned int c, int bytes);
+int						ft_utf8_count_bytes(unsigned int c);
+unsigned int			ft_utf8_convert(unsigned int c, int bytes);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 22:17:08 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/28 19:33:47 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/02/28 19:44:35 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static int       utf8_strlen(unsigned int *str, int max)
 
     res = 0;
     while (*str != '\0') {
-        res += utf8_count_bytes(*str);
+        res += ft_utf8_count_bytes(*str);
         if (res > max)
         {
-            res -= utf8_count_bytes(*str);
+            res -= ft_utf8_count_bytes(*str);
             return (res);
         }
         str++;
@@ -59,10 +59,10 @@ int                  utf8_strncpy(char *dst, unsigned int *src, int length)
     i = 0;
     j = 0;
     res = 0;
-    while (src[j] != '\0' && utf8_count_bytes(src[j]) + res <= length)
+    while (src[j] != '\0' && ft_utf8_count_bytes(src[j]) + res <= length)
     {
-        bytes = utf8_count_bytes(src[j]);
-        c = utf8_convert(src[j], bytes);
+        bytes = ft_utf8_count_bytes(src[j]);
+        c = ft_utf8_convert(src[j], bytes);
         res += bytes;
         while (bytes) {
             bytes--;
