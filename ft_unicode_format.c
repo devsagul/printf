@@ -40,14 +40,18 @@ static unsigned int	utf8_convert(unsigned int c, int bytes)
     return (c);
 }
 
-static int       utf8_strlen(unsigned int *str)
+static int       utf8_strlen(unsigned int *str, int max)
 {
-    size_t  res;
+    int  res;
 
     res = 0;
-    while (*str != '\0')
-    {
+    while (*str != '\0') {
         res += utf8_count_bytes(*str);
+        if (res > max)
+        {
+            res -= utf8_count_bytes(*str);
+            return (res);
+        }
         str++;
     }
     return (res);
@@ -70,19 +74,22 @@ unsigned int            *get_null_utf8_str(void)
     return (res);
 }
 
-size_t                  utf8_strncpy(char *dst, unsigned int *src, size_t length)
+int                  utf8_strncpy(char *dst, unsigned int *src, int length)
 {
     size_t  i;
     size_t  j;
     unsigned int c;
     int bytes;
+    int      res;
 
     i = 0;
     j = 0;
-    while (src[j] != '\0' && utf8_count_bytes(src[j]) + i < length)
+    res = 0;
+    while (src[j] != '\0' && utf8_count_bytes(src[j]) + res <= length)
     {
         bytes = utf8_count_bytes(src[j]);
         c = utf8_convert(src[j], bytes);
+        res += bytes;
         while (bytes) {
             bytes--;
             dst[i] = (char) (((0xFF << 8 * bytes) & c) >> 8 * bytes);
@@ -90,17 +97,38 @@ size_t                  utf8_strncpy(char *dst, unsigned int *src, size_t length
         }
         j++;
     }
-    if (src[j] != '\0')
+    /*
+    if (src[j] != '\0' && length != 0 && spec.long_long_mod)
     {
         bytes = utf8_count_bytes(src[j]);
+        res += bytes;
         c = utf8_convert(src[j], bytes);
         while (bytes) {
             bytes--;
             dst[i] = (char) (((0xFF << 8 * bytes) & c) >> 8 * bytes);
             i++;
         }
-        return (utf8_count_bytes(src[j]));
+        return (res - length);
     }
+     */
+    /*
+    if (length != 0 && spec.long_mod)
+        if(src[j] != '\0') {
+            if (src[j] != '\0' && res + utf8_count_bytes(src[j]) > length)
+                return (0);
+            if (src[j] == '\0')
+                return (0);
+            bytes = utf8_count_bytes(src[j]);
+            res += bytes;
+            c = utf8_convert(src[j], bytes);
+            while (bytes) {
+                bytes--;
+                dst[i] = (char) (((0xFF << 8 * bytes) & c) >> 8 * bytes);
+                i++;
+            }
+            j++;
+        }
+        */
     return (0);
 }
 
@@ -110,14 +138,16 @@ size_t					ft_unicode_format(char **pdst, t_specification spec,
     int		len;
     char    *str;
     unsigned int	*arg;
-    size_t          added;
 
     arg = (unsigned int *)va_arg(ap, unsigned int *);
     if (arg == NULL)
         arg = get_null_utf8_str();
     if (arg == NULL)
         return (0);
-    len = utf8_strlen(arg);
+    if (spec.precision_set)
+        len = utf8_strlen(arg, spec.precision);
+    else
+        len = utf8_strlen(arg, 1000);
     if (!spec.precision_set)
         spec.precision = len;
     if (len < spec.precision)
@@ -136,10 +166,9 @@ size_t					ft_unicode_format(char **pdst, t_specification spec,
     str[spec.minwidth + 2] = '\0';
     str[spec.minwidth + 3] = '\0';
     if (!spec.align_left)
-        added = utf8_strncpy(str + spec.minwidth - spec.precision, arg, spec.precision);
+        spec.minwidth += utf8_strncpy(str + spec.minwidth - spec.precision, arg, spec.precision);
     else
-        added = utf8_strncpy(str, arg, spec.precision);
-    //spec.minwidth += added;
+        spec.minwidth += utf8_strncpy(str, arg, spec.precision);
     *pdst = str;
     return (spec.minwidth);
 }

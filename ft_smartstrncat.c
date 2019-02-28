@@ -18,7 +18,7 @@ t_smartstr	*ft_smartstrncat(t_smartstr *smartstr, const char *s, size_t len)
 	size_t	j;
 	ssize_t	tmp;
 
-	if (s == NULL)
+	if (s == NULL || len == 0)
 		return (smartstr);
 	if (smartstr->len + len < smartstr->len)
 	{
