@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/28 20:39:29 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/03/01 11:48:10 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ size_t					ft_char_format(char **pdst, t_specification spec,
 size_t					ft_string_format(char **pdst, t_specification spec,
 										va_list ap);
 size_t					ft_unicode_format(char **pdst, t_specification spec,
-										   va_list ap);
+										va_list ap);
 size_t					ft_integer_format(char **pdst, t_specification spec,
 										va_list ap);
 size_t					ft_oct_format(char **pdst, t_specification spec,
