@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 22:17:08 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/03/01 11:42:43 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/03/01 11:59:44 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include "libftprintf.h"
 
-static int				utf8_strlen(unsigned int *str, int max)
+static int				utf8_strlen_limited(unsigned int *str, int max)
 {
 	int		res;
 
@@ -32,20 +32,16 @@ static int				utf8_strlen(unsigned int *str, int max)
 	return (res);
 }
 
-unsigned int			*get_null_utf8_str(void)
+static int				utf8_strlen(unsigned int *str)
 {
-	unsigned int	*res;
+	int		res;
 
-	res = (unsigned int *)malloc(sizeof(unsigned int) * 7);
-	if (res == NULL)
-		return (NULL);
-	res[0] = '(';
-	res[1] = 'n';
-	res[2] = 'u';
-	res[3] = 'l';
-	res[4] = 'l';
-	res[5] = ')';
-	res[6] = '\0';
+	res = 0;
+	while (*str != '\0')
+	{
+		res += ft_utf8_count_bytes(*str);
+		str++;
+	}
 	return (res);
 }
 
@@ -76,28 +72,32 @@ int						utf8_strncpy(char *dst, unsigned int *src, int length)
 	return (0);
 }
 
+t_specification			unicode_format_prepare(unsigned int *arg,
+												t_specification spec)
+{
+	int				len;
+
+	if (spec.precision_set)
+		len = utf8_strlen_limited(arg, spec.precision);
+	else
+		len = utf8_strlen(arg);
+	if (!spec.precision_set || len < spec.precision)
+		spec.precision = len;
+	if (spec.minwidth < spec.precision)
+		spec.minwidth = spec.precision;
+	return (spec);
+}
+
 size_t					ft_unicode_format(char **pdst, t_specification spec,
 											va_list ap)
 {
-	int				len;
 	char			*str;
 	unsigned int	*arg;
 
 	arg = (unsigned int *)va_arg(ap, unsigned int *);
 	if (arg == NULL)
-		arg = get_null_utf8_str();
-	if (arg == NULL)
-		return (0);
-	if (spec.precision_set)
-		len = utf8_strlen(arg, spec.precision);
-	else
-		len = utf8_strlen(arg, 1000);
-	if (!spec.precision_set)
-		spec.precision = len;
-	if (len < spec.precision)
-		spec.precision = len;
-	if (spec.minwidth < spec.precision)
-		spec.minwidth = spec.precision;
+		arg = (unsigned int *)L"(null)";
+	spec = unicode_format_prepare(arg, spec);
 	str = (char *)malloc(sizeof(char) * (spec.minwidth + 4));
 	if (str == NULL)
 		return (0);
@@ -105,12 +105,10 @@ size_t					ft_unicode_format(char **pdst, t_specification spec,
 		ft_memset(str, ' ', sizeof(char) * spec.minwidth);
 	else
 		ft_memset(str, '0', sizeof(char) * spec.minwidth);
-	str[spec.minwidth] = '\0';
-	str[spec.minwidth + 1] = '\0';
-	str[spec.minwidth + 2] = '\0';
-	str[spec.minwidth + 3] = '\0';
+	ft_bzero(str + spec.minwidth, 4);
 	if (!spec.align_left)
-		spec.minwidth += utf8_strncpy(str + spec.minwidth - spec.precision, arg, spec.precision);
+		spec.minwidth += utf8_strncpy(str + spec.minwidth - spec.precision,
+										arg, spec.precision);
 	else
 		spec.minwidth += utf8_strncpy(str, arg, spec.precision);
 	*pdst = str;
