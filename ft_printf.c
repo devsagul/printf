@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:17:31 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/03/01 15:18:56 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/03/01 15:25:02 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ static size_t	progress_buffer(const char *format,
 {
 	const char		*s;
 	t_specification	spec;
+	t_specification	*pspec;
 
 	if (*format != '%')
 	{
@@ -114,9 +115,10 @@ static size_t	progress_buffer(const char *format,
 		return (s - format);
 	}
 	s = format + 1;
-	ft_bzero(&spec, sizeof(spec));
-	s += get_specification(s, &spec);
-	spec = load_wildcards(&spec, ap);
+	pspec = &spec;
+	ft_bzero(pspec, sizeof(spec));
+	s += get_specification(s, pspec);
+	load_wildcards(pspec, ap);
 	ft_getstrbyspec(spec, pbuf, ap);
 	return (s - format);
 }
