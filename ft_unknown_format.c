@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unknown_format.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbalon-s <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 23:36:50 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/25 19:07:29 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/03/01 11:45:28 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 size_t				ft_unknown_format(char **pdst, t_specification spec)
 {
-	int		len;
 	char	*str;
 
 	if (spec.ch == '\0')
@@ -24,13 +23,9 @@ size_t				ft_unknown_format(char **pdst, t_specification spec)
 		*pdst = NULL;
 		return (0);
 	}
-	len = 1;
-	if (!spec.precision_set)
-		spec.precision = len;
-	if (len < spec.precision)
-		spec.precision = len;
-	if (spec.minwidth < len)
-		spec.minwidth = spec.precision;
+	if (!spec.precision_set || 1 < spec.precision)
+		spec.precision = 1;
+	spec.minwidth = spec.minwidth < 1 ? spec.precision : spec.minwidth;
 	str = (char *)malloc(sizeof(char) * (spec.minwidth + 1));
 	if (str == NULL)
 		return (0);
