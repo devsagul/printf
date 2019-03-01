@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/03/01 11:48:10 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/03/01 13:47:05 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct			s_specification
 	unsigned			alt_print : 1;
 	unsigned			wildcard_minwidth : 1;
 	unsigned			wildcard_precision : 1;
+	unsigned			get_wildcard_minwidth : 1;
+	unsigned			get_wildcard_precision : 1;
 	unsigned			precision_set : 1;
 	unsigned			short_mod : 1;
 	unsigned			short_short_mod : 1;
