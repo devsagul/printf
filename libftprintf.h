@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/03/02 13:53:32 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/03/02 15:05:47 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ typedef struct			s_floating_point
 	int					exponent;
 	unsigned long long	fraction;
 	unsigned int		sign : 1;
+	unsigned int		integer : 1;
+	unsigned int		nan : 1;
+	unsigned int		inf : 1;
 }						t_floating_point;
 
 
@@ -119,6 +122,8 @@ size_t					ft_unsigned_format(char **pdst, t_specification spec,
 size_t					ft_pointer_format(char **pdst, t_specification spec,
 										va_list ap);
 size_t					ft_afloat_format(char **pdst, t_specification spec,
+										va_list ap);
+size_t					ft_afloat_long_format(char **pdst, t_specification spec,
 										va_list ap);
 int						ft_utf8_count_bytes(unsigned int c);
 unsigned int			ft_utf8_convert(unsigned int c, int bytes);
