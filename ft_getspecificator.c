@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 17:33:46 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/28 19:59:13 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/03/01 18:31:44 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static size_t		additional_getspecificator(const char *format,
 		pspec->specificator = PERCENT;
 	else if (*format == 'p')
 		pspec->specificator = POINTER;
+	else if (*format == 'a')
+		pspec->specificator = A_FLOAT;
 	else
 	{
 		pspec->specificator = UNKNOWN;

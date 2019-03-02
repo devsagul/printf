@@ -6,26 +6,13 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 22:41:32 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/02/28 21:02:44 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/03/01 20:22:13 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdarg.h>
 #include "libftprintf.h"
-
-static int			count_digits(long long int nbr)
-{
-	int		res;
-
-	res = 0;
-	while (nbr != 0)
-	{
-		nbr /= 10;
-		res++;
-	}
-	return (res);
-}
 
 static void			format_integer_prepare_memory(t_specification spec,
 													char *str)
@@ -84,8 +71,8 @@ size_t				ft_integer_format(char **pdst, t_specification spec,
 	char			*str;
 
 	nbr = ft_get_signed_arg(ap, spec);
-	num_digits = count_digits(nbr);
-	if (nbr == 0 && ((spec.precision_set && spec.precision != 0) ||
+	num_digits = ft_count_digits_signed(nbr);
+	if (nbr == 0 && ((spec.precision_set && spec.precision) ||
 						!spec.precision_set))
 		num_digits++;
 	if (nbr < 0 || spec.force_sign || ((spec.force_spacing)))

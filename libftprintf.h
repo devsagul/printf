@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/03/01 13:47:05 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/03/02 13:53:32 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef	enum			e_specificator
 	HEX_UPPER,
 	UNSIGNED,
 	POINTER,
+	A_FLOAT,
 }						t_specificator;
 
 typedef struct			s_smartstr
@@ -39,6 +40,14 @@ typedef struct			s_smartstr
 	size_t				len;
 	size_t				size;
 }						t_smartstr;
+
+typedef struct			s_floating_point
+{
+	int					exponent;
+	unsigned long long	fraction;
+	unsigned int		sign : 1;
+}						t_floating_point;
+
 
 typedef struct			s_specification
 {
@@ -109,10 +118,17 @@ size_t					ft_unsigned_format(char **pdst, t_specification spec,
 										va_list ap);
 size_t					ft_pointer_format(char **pdst, t_specification spec,
 										va_list ap);
+size_t					ft_afloat_format(char **pdst, t_specification spec,
+										va_list ap);
 int						ft_utf8_count_bytes(unsigned int c);
 unsigned int			ft_utf8_convert(unsigned int c, int bytes);
 void					ft_format_hex(unsigned long long int nbr,
 										t_specification spec,
 										char *str, char b);
+void					ft_fill_floating_point(double nbr,
+												t_floating_point *dst);
+void					ft_fill_long_floating_point(long double nbr,
+												t_floating_point *dst);
+int						ft_count_digits_signed(long long int nbr);
 
 #endif

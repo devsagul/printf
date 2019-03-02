@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_count_digits_signed.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/01 18:29:43 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/03/01 17:51:24 by mbalon-s         ###   ########.fr       */
+/*   Created: 2019/03/01 20:15:44 by mbalon-s          #+#    #+#             */
+/*   Updated: 2019/03/01 20:17:30 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
-
-void	ft_bzero(void *s, size_t n)
+int			ft_count_digits_signed(long long int nbr)
 {
-	unsigned char *tmp;
+	int		res;
 
-	tmp = (unsigned char *)s;
-	while (n > 0)
+	res = 0;
+	while (nbr != 0)
 	{
-		*tmp = 0;
-		tmp++;
-		n--;
+		nbr /= 10;
+		res++;
 	}
+	return (res);
 }

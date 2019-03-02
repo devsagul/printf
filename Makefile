@@ -1,7 +1,7 @@
 NAME = libftprintf.a
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -I . -c -g
+CFLAGS =  -Wall -Werror -Wextra -I . -c
 
 SOURCES = ft_printf.c			        \
 		  ft_getstrbyspec.c		        \
@@ -31,9 +31,13 @@ SOURCES = ft_printf.c			        \
 		  ft_hex_upper_format.c	        \
 		  ft_unsigned_format.c	        \
 		  ft_pointer_format.c			\
+		  ft_afloat_format.c			\
 		  ft_utf8_count_bytes.c			\
 		  ft_utf8_convert.c				\
-		  ft_format_hex.c
+		  ft_format_hex.c				\
+		  ft_fill_floating_point.c		\
+		  ft_fill_long_floating_point.c		\
+		  ft_count_digits_signed.c		\
 
 OBJECTS = $(SOURCES:.c=.o)
 
