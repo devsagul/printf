@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:33:09 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/03/02 15:05:47 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/03/02 22:10:18 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef	enum			e_specificator
 	UNSIGNED,
 	POINTER,
 	A_FLOAT,
+	A_FLOAT_UPPER,
+	FLOAT,
 }						t_specificator;
 
 typedef struct			s_smartstr
@@ -123,7 +125,9 @@ size_t					ft_pointer_format(char **pdst, t_specification spec,
 										va_list ap);
 size_t					ft_afloat_format(char **pdst, t_specification spec,
 										va_list ap);
-size_t					ft_afloat_long_format(char **pdst, t_specification spec,
+size_t					ft_afloat_upper_format(char **pdst, t_specification spec,
+										va_list ap);
+size_t					ft_float_format(char **pdst, t_specification spec,
 										va_list ap);
 int						ft_utf8_count_bytes(unsigned int c);
 unsigned int			ft_utf8_convert(unsigned int c, int bytes);

@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 17:33:46 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/03/01 18:31:44 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/03/02 22:01:24 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ static size_t		additional_getspecificator(const char *format,
 		pspec->specificator = POINTER;
 	else if (*format == 'a')
 		pspec->specificator = A_FLOAT;
+	else if (*format == 'A')
+		pspec->specificator = A_FLOAT_UPPER;
+	else if (*format == 'f')
+		pspec->specificator = FLOAT;
 	else
 	{
 		pspec->specificator = UNKNOWN;

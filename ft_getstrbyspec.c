@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 13:48:05 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/03/01 18:34:12 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/03/02 22:10:00 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ static t_outputfunc	get_output_function(t_specificator specificator)
 		return (ft_pointer_format);
 	if (specificator == A_FLOAT)
 		return (ft_afloat_format);
+	if (specificator == A_FLOAT_UPPER)
+		return (ft_afloat_upper_format);
+	if (specificator == FLOAT)
+		return (ft_float_format);
 	return (NULL);
 }
 

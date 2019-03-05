@@ -6,7 +6,7 @@
 /*   By: mbalon-s <mbalon-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 18:32:52 by mbalon-s          #+#    #+#             */
-/*   Updated: 2019/03/02 20:21:10 by mbalon-s         ###   ########.fr       */
+/*   Updated: 2019/03/02 20:47:59 by mbalon-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,8 +166,6 @@ size_t					ft_afloat_format(char **pdst, t_specification spec,
 	char				*str;
 	t_floating_point	fp;
 
-	if (spec.long_double_mod)
-		return (ft_afloat_long_format(pdst, spec, ap));
 	nbr = va_arg(ap, double);
 	ft_fill_floating_point(nbr, &fp);
 	if (fp.nan || fp.inf)
